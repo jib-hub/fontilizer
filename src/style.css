@@ -1,0 +1,57 @@
+html, body {
+    height: 100%;
+  }
+  body{
+    background: #141E30;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-size: 18px;
+    color: #f7fff7;
+  }
+  .example-container {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+  }
+
+/* TEMP */
+
+  .random-font{
+    margin: auto;
+    font-size: 6rem;
+  }
+  .random-font span{
+    padding: 0 3rem;
+  
+  }
+  .fast-flicker:nth-of-type(2n+1) {
+      animation-delay: .5s;
+  }
+  .fast-flicker {
+      animation: shine 2s infinite;
+  }
+  .fast-flicker {
+      text-shadow: 0 0 0.6rem #ffb600, 0 0 1.5rem #ffb600, -0.2rem 0.1rem 1rem #ffb600, 0.2rem 0.1rem 1rem #ffb600, 0 -0.5rem 2rem #ffb600, 0 0.5rem 3rem #ffb600;
+  }
+  @keyframes shine {
+  0% {
+      text-shadow: none;
+  }
+  50% {
+      text-shadow: 0 0 0.6rem #ffb600, 0 0 1.5rem #ffb600, -0.2rem 0.1rem 1rem #ffb600, 0.2rem 0.1rem 1rem #ffb600, 0 -0.5rem 2rem #ffb600, 0 0.5rem 3rem #ffb600;
+  }
+  100% {
+      text-shadow: none;
+  }
+  }
+  
+  
+  
+  
+  
+  
+  .jib-random-font{
+    transition: opacity 1s ease-in-out;
+  }
+  

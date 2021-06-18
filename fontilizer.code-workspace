@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../Library/Mobile Documents/com~apple~CloudDocs/transfer/random-font-lib"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Fontilizer"
+	}
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fontilizer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script&family=Indie+Flower&family=Libre+Baskerville:ital@1&family=Mate+SC&family=Pacifico&family=Roboto:wght@100;400&family=DotGothic16&family=Montserrat:wght@100&family=Mukta&family=Viaoda+Libre&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <div class="example-container">
+      <div class="test test1 random-font">Hello<br/>World</div>
+    </div>
+    <div class="example-container">
+      <div class="test test2">ABC</div>
+    </div>
+    <script src="src/fontilizer.js"></script>
+    <script>
+      // Example of an array with css font-family names
+      fontTypes = [
+        "Bebas Neue, cursive",
+        "Dancing Script, cursive",
+        "Indie Flower, cursive",
+        "Libre Baskerville, serif",
+        "Mate SC, serif",
+        "Pacifico, cursive",
+        "Roboto, sans-serif",
+        "DotGothic16, sans-serif",
+        "Montserrat, sans-serif",
+        "Mukta, sans-serif",
+        "Viaoda Libre, cursive",
+      ];
+
+      //Fontilizer('body').append(F$().create('div'))
+      //console.log(F$('.test'))
+      console.log(F$('.test').splitIntoSpans().randomCase().randomFontType(fontTypes))
+    </script>
+  </body>
+</html>
