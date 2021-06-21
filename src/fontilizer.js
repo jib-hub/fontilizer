@@ -59,9 +59,7 @@ window.Fontilizer = window.F$ = (function () {
         .replace(" ", "");
       return cleanText.length > fontTypes.length ? true : false;
     },
-    lessFontTypesThanChars: function(elements, fontTypes){
-      
-    },
+    lessFontTypesThanChars: function (elements, fontTypes) {},
     randomCase: function () {
       return this.forEach(function (element, i) {
         let lines = [];
@@ -86,6 +84,24 @@ window.Fontilizer = window.F$ = (function () {
         const randomNum = Math.floor(Math.random() * fontTypes.length);
         element.style.fontFamily = fontTypes[randomNum];
       });
+    },
+    repeatRandomFontType: function (fontTypes, options) {
+      let that = this;
+      that.intervals = [];
+      return this.forEach(function (element, i) {
+        const interval = setInterval(function () {
+          const randomNum = Math.floor(Math.random() * fontTypes.length);
+          element.style.fontFamily = fontTypes[randomNum];
+        }, options.delay);
+        that.intervals.push(interval);
+      });
+    },
+    clearAllIntervals: function () {
+      this.intervals.forEach(function (element, i) {
+        clearInterval(element);
+      });
+      delete this.intervals;
+      return this;
     },
   };
   // ========= Main =========
