@@ -79,6 +79,30 @@ window.Fontilizer = window.F$ = (function () {
         element.innerHTML = lines.join("<br/>");
       });
     },
+    repeatRandomCase: function (options) {
+      let that = this;
+      if(!that.intervals) that.intervals = [];
+      return this.forEach(function (element, i) {
+        const interval = setInterval(function () {
+          let lines = [];
+          that.splitByBr(that.getTrimmedText(element)).forEach(function (
+            line,
+            i
+          ) {
+            let randomCaseString = "";
+            for (var i = 0; i < line.length; i++) {
+              randomCaseString +=
+                Math.floor(Math.random() * 2) === 1
+                  ? line.charAt(i).toUpperCase()
+                  : line.charAt(i).toLowerCase();
+            }
+            lines.push(randomCaseString);
+          });
+          element.innerHTML = lines.join("<br/>");
+        }, options.delay);
+        that.intervals.push(interval);
+      });
+    },
     randomFontType: function (fontTypes) {
       return this.forEach(function (element, i) {
         const randomNum = Math.floor(Math.random() * fontTypes.length);
@@ -87,7 +111,7 @@ window.Fontilizer = window.F$ = (function () {
     },
     repeatRandomFontType: function (fontTypes, options) {
       let that = this;
-      that.intervals = [];
+      if(!that.intervals) that.intervals = [];
       return this.forEach(function (element, i) {
         const interval = setInterval(function () {
           const randomNum = Math.floor(Math.random() * fontTypes.length);
