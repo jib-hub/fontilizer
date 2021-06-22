@@ -6,6 +6,7 @@
 :root {
   --color-dark : #141e30;
   --color-light : #e2e2e2;
+  --color-accent : #eef13a;
 }
 html,
 body {
@@ -39,6 +40,26 @@ a:hover {
 }
 code {
 	font-style: italic;
+	text-align: left;
+  max-width: 60%;
+  font-size: .9rem;
+  line-height: 1.1rem;
+}
+button {
+	padding: 1rem;
+	border-radius: 1rem;
+	outline: 0;
+	border: var(--color-accent) 3px solid;
+	color: var(--color-dark);
+	background: var(--color-accent);
+	cursor: pointer;
+  transition: all 1s ease-out;
+  margin-bottom: 1rem;
+}
+button:hover {
+	border: var(--color-dark) 3px solid;
+	color: var(--color-accent);
+	background: var(--color-dark);
 }
 .example-container {
   padding: 2rem;
@@ -74,6 +95,7 @@ code {
   letter-spacing: 1px;
 }
 .example > .info {
+  max-width: 60%;
   background: var(--color-light);
   color: var(--color-dark);
 	font-size: 1rem;
