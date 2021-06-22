@@ -10,11 +10,11 @@ if (typeof Array.prototype.indexOf !== "function") {
 }
 
 window.Fontilizer = window.F$ = (function () {
-  function Fontilizer(els) {
-    for (var i = 0; i < els.length; i++) {
-      this[i] = els[i];
+  function Fontilizer(elements) {
+    for (var i = 0; i < elements.length; i++) {
+      this[i] = elements[i];
     }
-    this.length = els.length;
+    this.length = elements.length;
   }
   Fontilizer.prototype = {
     getTrimmedText: function (node) {
@@ -50,17 +50,15 @@ window.Fontilizer = window.F$ = (function () {
       });
       return new Fontilizer(elements);
     },
-    lessFontsThanChars: function (text, fontTypes) {
-      if (typeof text === "number")
-        return text > fontTypes.length ? true : false;
-      const cleanText = text
-        .replace("<br/>", "")
-        .replace("<br>", "")
-        .replace(" ", "");
-      return cleanText.length > fontTypes.length ? true : false;
+    lessFontTypesThanChars: function (elements, fontTypes) {
+      return (
+        elements
+          .replace("<br/>", "")
+          .replace("<br>", "")
+          .replace(" ", "").length > fontTypes.length
+      );
     },
-    lessFontTypesThanChars: function (elements, fontTypes) {},
-    randomCase: function () {
+    randomCase: function (options = {}) {
       return this.forEach(function (element, i) {
         let lines = [];
         this.splitByBr(this.getTrimmedText(element)).forEach(function (
@@ -68,7 +66,19 @@ window.Fontilizer = window.F$ = (function () {
           i
         ) {
           let randomCaseString = "";
+          if (options.all) {
+            var randomNumber = Math.floor(Math.random() * 2);
+            var randomCase = function (char) {
+              return randomNumber === 1
+                ? char.toUpperCase()
+                : char.toLowerCase();
+            };
+          }
           for (var i = 0; i < line.length; i++) {
+            if (options.all) {
+              randomCaseString += randomCase(line.charAt(i));
+              continue;
+            }
             randomCaseString +=
               Math.floor(Math.random() * 2) === 1
                 ? line.charAt(i).toUpperCase()
@@ -79,25 +89,36 @@ window.Fontilizer = window.F$ = (function () {
         element.innerHTML = lines.join("<br/>");
       });
     },
-    repeatRandomCase: function (options) {
+    repeatRandomCase: function (options = {}) {
       let that = this;
-      if(!that.intervals) that.intervals = [];
+      if (!that.intervals) that.intervals = [];
       return this.forEach(function (element, i) {
         const interval = setInterval(function () {
           let lines = [];
-          that.splitByBr(that.getTrimmedText(element)).forEach(function (
-            line,
-            i
-          ) {
-            let randomCaseString = "";
-            for (var i = 0; i < line.length; i++) {
-              randomCaseString +=
-                Math.floor(Math.random() * 2) === 1
-                  ? line.charAt(i).toUpperCase()
-                  : line.charAt(i).toLowerCase();
-            }
-            lines.push(randomCaseString);
-          });
+          that
+            .splitByBr(that.getTrimmedText(element))
+            .forEach(function (line, i) {
+              let randomCaseString = "";
+              if (options.all) {
+                var randomNumber = Math.floor(Math.random() * 2);
+                var randomCase = function (char) {
+                  return randomNumber === 1
+                    ? char.toUpperCase()
+                    : char.toLowerCase();
+                };
+              }
+              for (var i = 0; i < line.length; i++) {
+                if (options.all) {
+                  randomCaseString += randomCase(line.charAt(i));
+                  continue;
+                }
+                randomCaseString +=
+                  Math.floor(Math.random() * 2) === 1
+                    ? line.charAt(i).toUpperCase()
+                    : line.charAt(i).toLowerCase();
+              }
+              lines.push(randomCaseString);
+            });
           element.innerHTML = lines.join("<br/>");
         }, options.delay);
         that.intervals.push(interval);
@@ -111,7 +132,7 @@ window.Fontilizer = window.F$ = (function () {
     },
     repeatRandomFontType: function (fontTypes, options) {
       let that = this;
-      if(!that.intervals) that.intervals = [];
+      if (!that.intervals) that.intervals = [];
       return this.forEach(function (element, i) {
         const interval = setInterval(function () {
           const randomNum = Math.floor(Math.random() * fontTypes.length);
@@ -138,22 +159,22 @@ window.Fontilizer = window.F$ = (function () {
     } else {
       els = [selector];
     }
-    return new Fontilizer(els);
+    return new Fontilizer(elements);
   };
   Fontilizer.prototype.create = function (tagName, attrs) {
     var el = new Fontilizer([document.createElement(tagName)]);
     if (attrs) {
       if (attrs.className) {
-        el.addClass(attrs.className);
+        element.addClass(attrs.className);
         delete attrs.className;
       }
       if (attrs.text) {
-        el.text(attrs.text);
+        element.text(attrs.text);
         delete attrs.text;
       }
       for (var key in attrs) {
         if (attrs.hasOwnProperty(key)) {
-          el.attr(key, attrs[key]);
+          element.attr(key, attrs[key]);
         }
       }
     }
@@ -169,34 +190,30 @@ window.Fontilizer = window.F$ = (function () {
     for (var i = 0; i < this.length; i++) {
       results.push(callback.call(this, this[i], i));
     }
-    return results; //.length > 1 ? results : results[0];
-  };
-  Fontilizer.prototype.mapOne = function (callback) {
-    var m = this.map(callback);
-    return m.length > 1 ? m : m[0];
+    return results.length > 1 ? results : results[0];
   };
 
   // ========== DOM MANIPULATION ==========
   Fontilizer.prototype.text = function (text) {
     if (typeof text !== "undefined") {
-      return this.forEach(function (el) {
-        el.innerText = text;
+      return this.forEach(function (element) {
+        element.innerText = text;
       });
     } else {
-      return this.mapOne(function (el) {
-        return el.innerText;
+      return this.mapOne(function (element) {
+        return element.innerText;
       });
     }
   };
 
   Fontilizer.prototype.html = function (html) {
     if (typeof html !== "undefined") {
-      return this.forEach(function (el) {
-        el.innerHTML = html;
+      return this.forEach(function (element) {
+        element.innerHTML = html;
       });
     } else {
-      return this.mapOne(function (el) {
-        return el.innerHTML;
+      return this.mapOne(function (element) {
+        return element.innerHTML;
       });
     }
   };
@@ -210,48 +227,48 @@ window.Fontilizer = window.F$ = (function () {
     } else {
       className = " " + classes;
     }
-    return this.forEach(function (el) {
-      el.className += className;
+    return this.forEach(function (element) {
+      element.className += className;
     });
   };
 
   Fontilizer.prototype.removeClass = function (clazz) {
-    return this.forEach(function (el) {
-      var cs = el.className.split(" "),
+    return this.forEach(function (element) {
+      var cs = element.className.split(" "),
         i;
 
       while ((i = cs.indexOf(clazz)) > -1) {
         cs = cs.slice(0, i).concat(cs.slice(++i));
       }
-      el.className = cs.join(" ");
+      element.className = cs.join(" ");
     });
   };
 
   Fontilizer.prototype.attr = function (attr, val) {
     if (typeof val !== "undefined") {
-      return this.forEach(function (el) {
-        el.setAttribute(attr, val);
+      return this.forEach(function (element) {
+        element.setAttribute(attr, val);
       });
     } else {
-      return this.mapOne(function (el) {
-        return el.getAttribute(attr);
+      return this.mapOne(function (element) {
+        return element.getAttribute(attr);
       });
     }
   };
 
-  Fontilizer.prototype.append = function (els) {
+  Fontilizer.prototype.append = function (elements) {
     return this.forEach(function (parEl, i) {
-      els.forEach(function (childEl) {
+      elements.forEach(function (childEl) {
         parEl.appendChild(i > 0 ? childEl.cloneNode(true) : childEl);
       });
     });
   };
 
-  Fontilizer.prototype.prepend = function (els) {
+  Fontilizer.prototype.prepend = function (elements) {
     return this.forEach(function (parEl, i) {
-      for (var j = els.length - 1; j > -1; j--) {
+      for (var j = elements.length - 1; j > -1; j--) {
         parEl.insertBefore(
-          i > 0 ? els[j].cloneNode(true) : els[j],
+          i > 0 ? elements[j].cloneNode(true) : elements[j],
           parEl.firstChild
         );
       }
@@ -259,28 +276,28 @@ window.Fontilizer = window.F$ = (function () {
   };
 
   Fontilizer.prototype.remove = function () {
-    return this.forEach(function (el) {
-      return el.parentNode.removeChild(el);
+    return this.forEach(function (element) {
+      return element.parentNode.removeChild(element);
     });
   };
 
   Fontilizer.prototype.on = (function () {
     if (document.addEventListener) {
-      return function (evt, fn) {
-        return this.forEach(function (el) {
-          el.addEventListener(evt, fn, false);
+      return function (event, fn) {
+        return this.forEach(function (element) {
+          element.addEventListener(event, fn, false);
         });
       };
     } else if (document.attachEvent) {
-      return function (evt, fn) {
-        return this.forEach(function (el) {
-          el.attachEvent("on" + evt, fn);
+      return function (event, fn) {
+        return this.forEach(function (element) {
+          element.attachEvent("on" + event, fn);
         });
       };
     } else {
-      return function (evt, fn) {
-        return this.forEach(function (el) {
-          el["on" + evt] = fn;
+      return function (event, fn) {
+        return this.forEach(function (element) {
+          element["on" + event] = fn;
         });
       };
     }
@@ -288,36 +305,36 @@ window.Fontilizer = window.F$ = (function () {
 
   Fontilizer.prototype.off = (function () {
     if (document.removeEventListener) {
-      return function (evt, fn) {
-        return this.forEach(function (el) {
-          el.removeEventListener(evt, fn, false);
+      return function (event, fn) {
+        return this.forEach(function (element) {
+          element.removeEventListener(event, fn, false);
         });
       };
     } else if (document.detachEvent) {
-      return function (evt, fn) {
-        return this.forEach(function (el) {
-          el.detachEvent("on" + evt, fn);
+      return function (event, fn) {
+        return this.forEach(function (element) {
+          element.detachEvent("on" + event, fn);
         });
       };
     } else {
-      return function (evt, fn) {
-        return this.forEach(function (el) {
-          el["on" + evt] = null;
+      return function (event, fn) {
+        return this.forEach(function (element) {
+          element["on" + event] = null;
         });
       };
     }
   })();
 
   var fontilizer = function (selector = window) {
-    var els;
+    var elements;
     if (typeof selector === "string") {
-      els = document.querySelectorAll(selector);
+      elements = document.querySelectorAll(selector);
     } else if (selector.length) {
-      els = selector;
+      elements = selector;
     } else {
-      els = [selector];
+      elements = [selector];
     }
-    return new Fontilizer(els);
+    return new Fontilizer(elements);
   };
 
   return fontilizer;
