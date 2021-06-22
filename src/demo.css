@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --color-dark : #141e30;
+  --color-light : #e2e2e2;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  background: #141e30; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #243b55,
+    #141e30
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #243b55,
+    #141e30
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-size: 18px;
+  color: var(--color-light);
+}
+h1, h2, h3 {
+  text-align: center;
+  margin: 1rem;
+}
+a, a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+code {
+	font-style: italic;
+}
+.example-container {
+  padding: 2rem;
+}
+.example {
+	display: flex;
+	flex-direction: row;
+  min-height: 300px;
+	margin: 0 auto;
+	flex-basis: 80%;
+}
+.example:not(:last-child) {
+  margin-bottom: 2rem;
+}
+.example > div {
+	flex: 1;
+	display: flex;
+  flex-direction: column;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	justify-items: center;
+	text-align: center;
+	line-height: 1;
+  border: var(--color-light) 4px solid;
+}
+.example span {
+  margin: 1rem;
+}
+.example > div:not(.info){
+	font-size: 3rem;
+  line-height: 3.4rem;
+  letter-spacing: 1px;
+}
+.example > .info {
+  background: var(--color-light);
+  color: var(--color-dark);
+	font-size: 1rem;
+  line-height: 3.4rem;
+}

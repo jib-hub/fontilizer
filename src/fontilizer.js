@@ -16,19 +16,14 @@ window.Fontilizer = window.F$ = (function () {
     }
     this.length = elements.length;
   }
+
+  // ========= Fontilizer Methods =========
   Fontilizer.prototype = {
-    getTrimmedText: function (node) {
-      return node.innerHTML.trim();
-    },
-    splitByBr: function (string) {
-      const separator = string.indexOf("<br/>") === -1 ? "<br>" : "<br/>";
-      return string.split(separator);
-    },
     splitIntoSpans: function () {
       let elements = [];
       this.forEach(function (element, i) {
         let spans = [];
-        this.splitByBr(element.innerHTML).forEach(function (line, i) {
+        this.splitByBr(this.getTrimmedText(element)).forEach(function (line, i) {
           let html = "";
           line.split("").forEach(function (char, i) {
             html +=
@@ -52,10 +47,8 @@ window.Fontilizer = window.F$ = (function () {
     },
     lessFontTypesThanChars: function (elements, fontTypes) {
       return (
-        elements
-          .replace("<br/>", "")
-          .replace("<br>", "")
-          .replace(" ", "").length > fontTypes.length
+        elements.replace("<br/>", "").replace("<br>", "").replace(" ", "")
+          .length > fontTypes.length
       );
     },
     randomCase: function (options = {}) {
@@ -89,7 +82,7 @@ window.Fontilizer = window.F$ = (function () {
         element.innerHTML = lines.join("<br/>");
       });
     },
-    repeatRandomCase: function (options = {}) {
+    repeatRandomCase: function (options = { delay: 1000 }) {
       let that = this;
       if (!that.intervals) that.intervals = [];
       return this.forEach(function (element, i) {
@@ -130,7 +123,7 @@ window.Fontilizer = window.F$ = (function () {
         element.style.fontFamily = fontTypes[randomNum];
       });
     },
-    repeatRandomFontType: function (fontTypes, options) {
+    repeatRandomFontType: function (fontTypes, options = { delay: 1000 }) {
       let that = this;
       if (!that.intervals) that.intervals = [];
       return this.forEach(function (element, i) {
@@ -149,7 +142,8 @@ window.Fontilizer = window.F$ = (function () {
       return this;
     },
   };
-  // ========= Main =========
+
+  // ========= UTILS =========
   Fontilizer.prototype.get = function (selector) {
     var els;
     if (typeof selector === "string") {
@@ -180,7 +174,13 @@ window.Fontilizer = window.F$ = (function () {
     }
     return el;
   };
-  // ========= UTILS =========
+  Fontilizer.prototype.getTrimmedText = function (node) {
+    return node.innerHTML.trim();
+  };
+  Fontilizer.prototype.splitByBr = function (string) {
+    const separator = string.indexOf("<br/>") === -1 ? "<br>" : "<br/>";
+    return string.split(separator);
+  };
   Fontilizer.prototype.forEach = function (callback) {
     this.map(callback);
     return this;
@@ -200,7 +200,7 @@ window.Fontilizer = window.F$ = (function () {
         element.innerText = text;
       });
     } else {
-      return this.mapOne(function (element) {
+      return this.map(function (element) {
         return element.innerText;
       });
     }
@@ -212,7 +212,7 @@ window.Fontilizer = window.F$ = (function () {
         element.innerHTML = html;
       });
     } else {
-      return this.mapOne(function (element) {
+      return this.map(function (element) {
         return element.innerHTML;
       });
     }
@@ -250,7 +250,7 @@ window.Fontilizer = window.F$ = (function () {
         element.setAttribute(attr, val);
       });
     } else {
-      return this.mapOne(function (element) {
+      return this.map(function (element) {
         return element.getAttribute(attr);
       });
     }
