@@ -145,18 +145,18 @@ window.Fontilizer = window.F$ = (function () {
 
   // ========= UTILS =========
   Fontilizer.prototype.get = function (selector) {
-    var els;
+    var elements;
     if (typeof selector === "string") {
-      els = document.querySelectorAll(selector);
+      elements = document.querySelectorAll(selector);
     } else if (selector.length) {
-      els = selector;
+      elements = selector;
     } else {
-      els = [selector];
+      elements = [selector];
     }
     return new Fontilizer(elements);
   };
   Fontilizer.prototype.create = function (tagName, attrs) {
-    var el = new Fontilizer([document.createElement(tagName)]);
+    var element = new Fontilizer([document.createElement(tagName)]);
     if (attrs) {
       if (attrs.className) {
         element.addClass(attrs.className);
@@ -172,7 +172,7 @@ window.Fontilizer = window.F$ = (function () {
         }
       }
     }
-    return el;
+    return element;
   };
   Fontilizer.prototype.getTrimmedText = function (node) {
     return node.innerHTML.trim();
