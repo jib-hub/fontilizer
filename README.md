@@ -16,7 +16,7 @@ Inside HEADER tag
 ## Demo
 
 <a href="index.html">Demofile</a><br/>
-<a href="https://www.julianberger.de/coding/fontilizer/">Watch live</a>
+<a target="_blank" href="https://www.julianberger.de/coding/fontilizer/">Watch live</a>
 
 
 ## Documentation
