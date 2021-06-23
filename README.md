@@ -2,10 +2,24 @@
 Javascript Framework
 by Julian Ismael Berger
 
+## Install Guide
+
+Include JS file in HTML file
+
+End of BODY tag
+<script src="[PATH_TO_FILE]/fontilizer.js"></script>
+
+Inside HEADER tag
+<script defer src="[PATH_TO_FILE]/fontilizer.js"></script>
+
+
 ## Demo
 
-<a href="index.html">Demo</a>
+<a href="index.html">Demofile</a>
+<a href="index.html">Watch live</a>
+
 
 ## Documentation
+
 
 ## Changelog
