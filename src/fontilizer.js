@@ -1,3 +1,9 @@
+/**
+ * Fontilizer
+ * by Julian Ismael Berger
+ * Version: 0.1.0
+ */
+
 if (typeof Array.prototype.indexOf !== "function") {
   Array.prototype.indexOf = function (item) {
     for (var i = 0; i < this.length; i++) {
