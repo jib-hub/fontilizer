@@ -16,17 +16,23 @@ Inside HEADER tag
 
 ## Usage
 Select node(s) by selector
+```
 Fontilizer(".class")
 F$("#id")
+```
 
 Set a random font-family for node(s), pass an array of font type names (fontTypes) that are included in your html file or local fonts
+```
 Fontilizer(".random-font-family").randomFontType(fontTypes);
 F$(".random-font-family").randomFontType(fontTypes);
+```
 
 Repeat changing font-family by interval
+```
 F$(".random-font-family-repeat").repeatRandomFontType(fontTypes, {
 delay: 500,
 });
+```
 
 
 ## Demo
