@@ -2,6 +2,8 @@
 Javascript Framework
 by Julian Ismael Berger
 
+<img src="fontilizer-vid.gif" />
+
 This project is in progress. You can use Fontilizer to manipulate DOM easyily. The main puprose is changing text in various ways. You can set the font-family of html nodes randomly or set them to uppercase randomly. You can repeat these actions as interval and many more.
 
 ## Install Guide
